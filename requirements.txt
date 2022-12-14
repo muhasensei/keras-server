@@ -1,0 +1,6 @@
+flask
+keras
+tensorflow
+flask-cors
+pickle-mixin
+pandas
