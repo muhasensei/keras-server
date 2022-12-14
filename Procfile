@@ -1,1 +1,1 @@
-web: flask app
+web: waitress-serve app:app

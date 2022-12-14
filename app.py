@@ -3,8 +3,11 @@ from keras.models import load_model
 from flask_cors import CORS
 import pickle
 import pandas as pd
+import waitress
+
 app = Flask(__name__)
 CORS(app)
+waitress.serve(app.wsgi_app)
 
 @app.route('/', methods=['GET'])
 def get_tasks():
