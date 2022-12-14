@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, request, abort, make_response
 from keras.models import load_model
 from flask_cors import CORS
 import pickle
