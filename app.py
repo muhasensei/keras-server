@@ -62,9 +62,6 @@ def predict_gradient():
         'prediction': pd.Series(prediction).to_json(orient='values'),
     }
 
-
-
-
 @app.route('/predict/keras', methods=['POST'])
 def predict():
     if not request.json:
