@@ -4,4 +4,3 @@ flask-cors
 pickle-mixin
 pandas
 waitress
-tensorflow

@@ -61,6 +61,7 @@ def predict_gradient():
     return {
         'prediction': pd.Series(prediction).to_json(orient='values'),
     }
+"""
 
 @app.route('/predict/keras', methods=['POST'])
 def predict():
@@ -84,6 +85,7 @@ def predict():
         'prediction': int(predictions[0][0] * 100),
         'formData': data,
     }
+ """
 
 if __name__ == '__main__':
     app.run(debug=True)
