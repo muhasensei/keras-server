@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, abort, make_response
 from keras.models import load_model
-import tensorflow as tf
 from flask_cors import CORS
 import pickle
 import pandas as pd
@@ -78,7 +77,8 @@ def predict():
         "total_rating": data['total_rating'] / 100,
     }
     model = load_model('models/keras.h5')
-    input_dict = {name: tf.convert_to_tensor([value]) for name, value in sample.items()}
+    df = pd.DataFrame(sample, index=[0])
+    input_dict = {name: df[name].astype(float) for name in df.columns}
     predictions = model.predict(input_dict)
     return {
         'prediction': int(predictions[0][0] * 100),
