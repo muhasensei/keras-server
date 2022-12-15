@@ -1,13 +1,11 @@
-from flask import Flask, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response
 from keras.models import load_model
+import tensorflow as tf
 from flask_cors import CORS
 import pickle
 import pandas as pd
-import waitress
-
 app = Flask(__name__)
 CORS(app)
-waitress.serve(app.wsgi_app)
 
 @app.route('/', methods=['GET'])
 def get_tasks():
@@ -62,7 +60,10 @@ def predict_gradient():
         'prediction': pd.Series(prediction).to_json(orient='values'),
     }
 
-    @app.route('/predict/keras', methods=['POST'])
+
+
+
+@app.route('/predict/keras', methods=['POST'])
 def predict():
     if not request.json:
         abort(400)
@@ -77,8 +78,7 @@ def predict():
         "total_rating": data['total_rating'] / 100,
     }
     model = load_model('models/keras.h5')
-    df = pd.DataFrame(sample, index=[0])
-    input_dict = {name: df[name].astype(float) for name in df.columns}
+    input_dict = {name: tf.convert_to_tensor([value]) for name, value in sample.items()}
     predictions = model.predict(input_dict)
     return {
         'prediction': int(predictions[0][0] * 100),
